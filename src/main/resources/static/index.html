@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>STUDENT PAGE</h2>
+    <button id="loadBtn">Load Students</button>
+    <br><br>
+
+    <table border="1" id="studentTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>ID</th><th>NAME</th><th>AGE</th><th>GENDER</th><th>TRAINER</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        $("#loadBtn").click(function(){
+            $.ajax({
+                url: "http://localhost:8282/students",
+                method: "GET",
+                success: function(data) {
+                    let tbody = $("#studentTable tbody");
+                    tbody.empty();
+                    data.forEach(function(student) {
+                        tbody.append(`<tr>
+                            <td>${student.id}</td>
+                            <td>${student.name}</td>
+                            <td>${student.age}</td>
+                            <td>${student.gender}</td>
+                            <td>${student.trainer}</td>
+                        </tr>`);
+                    });
+                    $("#studentTable").show();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
